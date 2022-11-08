@@ -249,12 +249,12 @@ jqueryWidget: {
     // Not using JQuery in these two methods just in case it slows things down too much.
     // NOTE: [0] subscript gets DOM object from JQuery selector.
     blankWord_dashed: function(w) {
-        // if (this.currentWord <= this.stoppingPoint) {
-        //     this.owsnjq[w].style.borderColor = this.unshownBorderColor;
-        //     this.iwsnjq[w].style.visibility = "hidden";
-        //     if (! this.showBehind)
-        //         this.owsnjq[w].style.borderColor = this.background;
-        // }
+        if (this.currentWord <= this.stoppingPoint) {
+            this.owsnjq[w].style.borderColor = this.unshownBorderColor;
+            this.iwsnjq[w].style.visibility = "hidden";
+            if (! this.showBehind)
+                this.owsnjq[w].style.borderColor = this.background;
+        }
     },
     showWord_dashed: function(w) {
         if (this.currentWord < this.stoppingPoint) {
