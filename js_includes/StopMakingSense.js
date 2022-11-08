@@ -178,7 +178,7 @@ jqueryWidget: {
                 var time = new Date().getTime();
                 var code = e.keyCode;
 
-                if (code == 32) {
+                if (code == t.options.yesKeyCode) {
                     // *** goToNext() ***
 //                    t.recordSprResult(time, t.currentWord);
                     var word = t.currentWord;
@@ -203,6 +203,11 @@ jqueryWidget: {
                     }
                     return false;
                     // ***
+                } else if (code = t.options.noKeyCode)
+                {
+                    alert("no key pressed")
+                    // TODO: adjust results section here, end trial
+                    return false;
                 }
                 else {
                     return true;
@@ -307,7 +312,7 @@ jqueryWidget: {
 },
 
 properties: {
-    obligatory: ["s"],
+    obligatory: ["s", "yesKeyCode", "noKeyCode"],
     htmlDescription: function (opts) {
         return $(document.createElement("div")).text(opts.s);
     }
