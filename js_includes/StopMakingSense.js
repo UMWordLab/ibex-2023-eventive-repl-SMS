@@ -203,10 +203,23 @@ jqueryWidget: {
                     }
                     return false;
                     // ***
-                } else if (code = t.options.noKeyCode)
+                } else if (code == t.options.noKeyCode)
                 {
-                    alert("no key pressed")
-                    // TODO: adjust results section here, end trial
+                    var word = t.currentWord;
+                    
+                    if (word > 0 && word <= t.stoppingPoint) {
+                        var rs = t.sprResults[word-1];
+                        rs[0] = time;
+                        rs[1] = t.previousTime;
+                    }
+
+                    t.previousTime = time;
+
+                    if (t.currentWord > t.stoppingPoint) {
+                        t.processSprResults();
+                        t.finishedCallback(t.resultsLines);
+                    }
+
                     return false;
                 }
                 else {
