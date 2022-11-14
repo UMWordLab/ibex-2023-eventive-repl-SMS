@@ -177,11 +177,11 @@ jqueryWidget: {
             this.safeBind($(document), 'keydown', function(e) {
                 var time = new Date().getTime();
                 var code = e.keyCode;
+                var word = t.currentWord;
 
                 if (code == t.options.yesKeyCode) {
                     // *** goToNext() ***
 //                    t.recordSprResult(time, t.currentWord);
-                    var word = t.currentWord;
                     if (word > 0 && word <= t.stoppingPoint) {
                         var rs = t.sprResults[word-1];
                         rs[0] = time;
@@ -205,7 +205,6 @@ jqueryWidget: {
                     // ***
                 } else if (code == t.options.noKeyCode)
                 {
-                    var word = t.currentWord;
                     
                     if (word > 0 && word <= t.stoppingPoint) {
                         var rs = t.sprResults[word-1];
@@ -215,10 +214,11 @@ jqueryWidget: {
 
                     t.previousTime = time;
 
-                    if (t.currentWord > t.stoppingPoint) {
-                        t.processSprResults();
-                        t.finishedCallback(t.resultsLines);
-                    }
+                    // processes results
+                    // moves to next trial
+                    t.processSprResults();
+                    t.finishedCallback(t.resultsLines);
+                    
 
                     return false;
                 }
