@@ -34,6 +34,20 @@ jqueryWidget: {
                "'dashed' (default) or 'in place'.");
 
         this.currentWord = 0;
+        // if stopMakingSense word doesn't exist, set it equal to "" to help make comparisons later on easier
+        // if stopmakingSense word does exist, set it equal to itself (aka do nothing)
+        this.options.stopMakingSenseWord == undefined ? this.options.stopMakingSenseWord = "" 
+                                            : this.options.stopMakingSenseWord = this.options.stopMakingSenseWord;
+      
+        // arbitarily large number used to indicate no index exists
+        // will be used for comparison
+        this.stopMakingSenseIndex = 1000;
+        this.correctResponses = [];
+        if (this.options.stopMakingSenseWord != ""){
+            // index at which sentence no longer makes sense
+            this.stopMakingSenseIndex = this.words.indexOf(this.options.stopMakingSenseWord);
+        }
+
 
         // Is there a "stopping point" specified?
         this.stoppingPoint = this.words.length;
@@ -85,8 +99,10 @@ jqueryWidget: {
         if (this.mode == "self-paced reading") {
             // Don't want to be allocating arrays in time-critical code.
             this.sprResults = [];
-            for (var i = 0; i < this.words.length; ++i)
-                this.sprResults[i] = new Array(2);
+            for (var i = 0; i < this.words.length; ++i){
+                this.sprResults[i] = new Array(3);
+            }
+            
         }
         this.previousTime = null;
 
@@ -134,6 +150,8 @@ jqueryWidget: {
                 this.wordOSpans.push(ospan);
                 this.iwsnjq.push(ispan[0]);
                 this.owsnjq.push(ospan[0]);
+                this.correctResponses[j] = (j < this.stopMakingSenseIndex) ? "YES":
+                                            j == this.stopMakingSenseIndex ? "NO": "NaN";
             }
         }
 
@@ -186,6 +204,7 @@ jqueryWidget: {
                         var rs = t.sprResults[word-1];
                         rs[0] = time;
                         rs[1] = t.previousTime;
+                        rs[2] = "YES"
                     }
                     t.previousTime = time;
 
@@ -210,6 +229,7 @@ jqueryWidget: {
                         var rs = t.sprResults[word-1];
                         rs[0] = time;
                         rs[1] = t.previousTime;
+                        rs[2] = "NO"
                     }
 
                     t.previousTime = time;
@@ -311,10 +331,14 @@ jqueryWidget: {
         }
 
         for (var i = 0; i < nonSpaceWords.length; ++i) {
+            // ensures user responded to the word, if they did not, set their response to NaN
+            var userResponse = this.sprResults[i][2] != undefined ? this.sprResults[i][2]:"NaN";
             this.resultsLines.push([
                 ["Word number", i+1],
                 ["Word", csv_url_encode(nonSpaceWords[i])],
                 ["Reading time", this.sprResults[i][0] - this.sprResults[i][1]],
+                ["User Response", userResponse],
+                ["Correct Response ", this.correctResponses[i]],
                 ["Newline?", (! this.display == "in place") &&
                              boolToInt(((i+1) < this.wordOSpans.length) &&
                              (this.wordOSpans[i].offset().top != this.wordOSpans[i+1].offset().top))],

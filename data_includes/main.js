@@ -11,7 +11,8 @@ var items = [
                 .print("center at 50vw", "middle at 30vh")
             ,
             newController("StopMakingSense",  {s: "Here's a silly filler sentence from our new component", 
-                                  yesKeyCode: "89", noKeyCode:"78"})
+                                  yesKeyCode: "89", noKeyCode:"78"
+                                  , stopMakingSenseWord: "component"})
                 .print("center at 50vw", "middle at auto")
                 .log()
                 .wait()
