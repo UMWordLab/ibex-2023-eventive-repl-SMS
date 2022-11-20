@@ -1,16 +1,18 @@
 PennController.ResetPrefix(null);
 
 var shuffleSequence = seq("filler")
+var showProgressBar = false;
 
 var items = [
     ["filler" , "PennController", newTrial(
-            newText("Hint: Press y for yes, n for no")
+            newText("Reminder: Press y for yes, n for no")
+                .css("font-family", "Helvetica, sans-serif")
                 .css("font-size", "12px")
-                .print("center at 50vw", "middle at 60vh")
+                .print("center at 50vw", "middle at 30vh")
             ,
             newController("StopMakingSense",  {s: "Here's a silly filler sentence from our new component", 
                                   yesKeyCode: "89", noKeyCode:"78"})
-                .print("center at 50vw", "middle at 50vh")
+                .print("center at 50vw", "middle at auto")
                 .log()
                 .wait()
             )
