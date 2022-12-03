@@ -10,9 +10,9 @@ var items = [
                 .css("font-size", "12px")
                 .print("center at 50vw", "middle at 30vh")
             ,
-            newController("StopMakingSense",  {s: "Here's a silly filler sentence from our new component", 
-                                  yesKeyCode: "89", noKeyCode:"78"
-                                  , stopMakingSenseWord: "component"})
+            newController("StopMakingSense",  {s: "I am eating a kicked icecream", 
+                                  yesKeyCode: "89", noKeyCode:"78", smsIndex:4})
+                                  
                 .print("center at 50vw", "middle at auto")
                 .log()
                 .wait()
