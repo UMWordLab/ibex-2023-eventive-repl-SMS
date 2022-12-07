@@ -1,45 +1,43 @@
 PennController.ResetPrefix(null);
 
 var shuffleSequence = seq( 
-                            sepWith("sep", "filler")
+                            "setcounter",
+                            followEachWith("sep", seq(rshuffle(startsWith("mklo"))))
+                            
                       )
+
 var showProgressBar = false;
 
 
-// this code will eventually be changed
-// once we have a CSV of stimuli, we will do something similar
-// to what we did in the Maize Task
+Template("Experiment.csv", row => {
+   items.push(
+       
+    [[row.cond1, row.cond2], "PennController", newTrial(
+        newController("StopMakingSense", {
+            s: row.sentence,
+            yesKeyCode: "89", 
+            noKeyCode:"78",
+            smsIndex: row.smsAt ? row.smsAt : null
+        })
+            .print()
+            .log()
+            .wait()
+    )
+        .log("counter", __counter_value_from_server__)
+        .log("label", row.label)
+        .log("latinitem", row.item)
+    ] 
+   
+   );
+   return newTrial('_dummy_',null);
+})
 
-// this is just test / placeholder code.
 var items = [
-    ["filler" , "PennController", newTrial(
-            newText("Reminder: Press y for yes, n for no")
-                .css("font-family", "Helvetica, sans-serif")
-                .css("font-size", "12px")
-                .print("center at 50vw", "middle at 30vh")
-            ,
-            newController("StopMakingSense",  {s: "I am eating a kicked icecream", 
-                                  yesKeyCode: "89", noKeyCode:"78", smsIndex:2})
-                                  
-                .print("center at 50vw", "middle at auto")
-                .log()
-                .wait()
-            )
-    ],
-    ["filler" , "PennController", newTrial(
-            newText("Reminder: Press y for yes, n for no")
-                .css("font-family", "Helvetica, sans-serif")
-                .css("font-size", "12px")
-                .print("center at 50vw", "middle at 30vh")
-            ,
-            newController("StopMakingSense",  {s: "This is another example!", 
-                                  yesKeyCode: "89", noKeyCode:"78"})
-                                  
-                .print("center at 50vw", "middle at auto")
-                .log()
-                .wait()
-            )
-    ],
+
+    ["setcounter", "__SetCounter__", { }],
     ["sep", "Separator", {transfer: 1500, normalMessage: "Please wait for the next item."}]
+
+    
+    
 ]
 
