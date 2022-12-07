@@ -2,7 +2,11 @@ PennController.ResetPrefix(null);
 
 var shuffleSequence = seq( 
                             "setcounter",
-                            followEachWith("sep", seq(rshuffle(startsWith("mklo"))))
+                            followEachWith("sep", seq(rshuffle(
+                                startsWith("mklo"),
+                                startsWith("gp"),
+                                startsWith("psych")
+                            )))
                             
                       )
 
@@ -13,13 +17,16 @@ Template("Experiment.csv", row => {
    items.push(
        
     [[row.cond1, row.cond2], "PennController", newTrial(
+        newText("Reminder: Press y for yes, n for no")
+                .print("center at 50vw", "middle at 30vh")
+            ,
         newController("StopMakingSense", {
             s: row.sentence,
             yesKeyCode: "89", 
             noKeyCode:"78",
             smsIndex: row.smsAt ? row.smsAt : null
         })
-            .print()
+            .print("center at 50vw", "middle at auto")
             .log()
             .wait()
     )
