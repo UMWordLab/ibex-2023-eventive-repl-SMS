@@ -146,9 +146,7 @@ function boolToInt(x) {
           this.correctResponses[j] =
             j < this.options.smsIndex
               ? "YES"
-              : j == this.options.smsIndex
-              ? "NO"
-              : "NaN";
+              : "NO"
         }
   
         var t = this;
@@ -269,7 +267,7 @@ function boolToInt(x) {
         for (var i = 0; i < nonSpaceWords.length; ++i) {
           // ensures user responded to the word, if they did not, set their response to NaN
           var userResponse =
-            this.smsResults[i][2] != undefined ? this.smsResults[i][2] : "NaN";
+            this.smsResults[i][2] != undefined ? this.smsResults[i][2] : "Na";
   
           this.resultsLines.push([
             ["Word number", i + 1],

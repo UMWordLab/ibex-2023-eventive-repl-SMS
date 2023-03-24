@@ -1,11 +1,20 @@
 PennController.ResetPrefix(null);
 
-var shuffleSequence = seq( 
+var shuffleSequence = seq( "consent", "IDentry", "demo", "intro",
+                            "startpractice",
+                                            
+                            followEachWith("sep",seq("practice")),
+
                             "setcounter",
-                            followEachWith("sep", seq(rshuffle(
+                            "starter",
+
+                            followEachWith("sep",seq(rshuffle(
                                 startsWith("mklo"),
                                 startsWith("gp")
-                            )))
+                            ))),
+
+                            "sendresults",
+                            "completion"
                             
                       )
 
@@ -37,10 +46,110 @@ Template("Experiment.csv", row => {
    return newTrial('_dummy_',null);
 })
 
+Header(
+   newVar("partID").global()   
+)
+.log( "partid" , getVar("partID") )
+
+
+newTrial("IDentry",
+   newText("instr", "Please enter your Prolific ID:").print()
+   ,
+   newHtml("partpage", "<input type='text' id='partID' name='participant ID' min='1' max='120'>").print()
+   ,
+   newButton("Next").print().wait(
+       getVar("partID").set( v=>$("#partID").val() ).testNot.is('')
+   )
+)
+
+newTrial("practice",
+        newText("Reminder: Press f for yes, j for no")
+                .print("center at 50vw", "middle at 30vh")
+            ,
+        newController("StopMakingSense", {
+            s: "The carpenter ordered food from the restaurant",
+            yesKeyCode: "70", 
+            noKeyCode:"74",
+            // - 1 since .csv is not 0 indexed 
+            smsIndex: null
+        })
+            .print("center at 50vw", "middle at auto")
+            .log()
+            .wait()
+)
+
+newTrial("practice",
+        newText("Reminder: Press f for yes, j for no")
+                .print("center at 50vw", "middle at 30vh")
+            ,
+        newController("StopMakingSense", {
+            s: "The crazy cat not played",
+            yesKeyCode: "70", 
+            noKeyCode:"74",
+            // - 1 since .csv is not 0 indexed 
+            smsIndex: 3
+        })
+            .print("center at 50vw", "middle at auto")
+            .log()
+            .wait()
+)
+
+newTrial("practice",
+        newText("Reminder: Press f for yes, j for no")
+                .print("center at 50vw", "middle at 30vh")
+            ,
+        newController("StopMakingSense", {
+            s: "A tired yes slept for hours",
+            yesKeyCode: "70", 
+            noKeyCode:"74",
+            // - 1 since .csv is not 0 indexed 
+            smsIndex: 2
+        })
+            .print("center at 50vw", "middle at auto")
+            .log()
+            .wait()
+)
+
+newTrial("demo",
+   newHtml("Form", "demo.html")
+       .log()
+       .print()
+   ,
+   newButton("continue", "Submit")
+       .css("font-size","medium")
+       .center()
+       .print()
+       .wait(   
+           getHtml("Form").test.complete()
+           .failure( getHtml("Form").warn())
+           ,
+           newTimer("waitDemo", 500)
+               .start()
+               .wait()
+           )
+)
+
 var items = [
 
+    ["sep", "Separator", {transfer: 1500, normalMessage: "Please wait for the next item."}],
+
+    ["startpractice", Message, {consentRequired: false,
+        html: ["div",
+               ["p", "First you can do three practice sentences."]
+              ]}],
+
     ["setcounter", "__SetCounter__", { }],
-    ["sep", "Separator", {transfer: 1500, normalMessage: "Please wait for the next item."}]    
+    ["sendresults", "__SendResults__", { }],
+
+    ["consent", "Form", { html: { include: "consent.html" } } ],
+
+    ["starter", Message, {consentRequired: false,
+        html: ["div",
+               ["p", "Time to start the main portion of the experiment!"]
+              ]}],
+             
+      
+     ["completion", "Form", {continueMessage: null, html: { include: "completion.html" } }]
     
 ]
 
