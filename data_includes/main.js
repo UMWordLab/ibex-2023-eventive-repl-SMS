@@ -83,11 +83,11 @@ newTrial("practice",
                 .print("center at 50vw", "middle at 30vh")
             ,
         newController("StopMakingSense", {
-            s: "The crazy cat not played",
+            s: "The cat has the played",
             yesKeyCode: "70", 
             noKeyCode:"74",
             // - 1 since .csv is not 0 indexed 
-            smsIndex: 3
+            smsIndex: 4
         })
             .print("center at 50vw", "middle at auto")
             .log()
@@ -99,11 +99,11 @@ newTrial("practice",
                 .print("center at 50vw", "middle at 30vh")
             ,
         newController("StopMakingSense", {
-            s: "A tired yes slept for hours",
+            s: "A tired man the for hours",
             yesKeyCode: "70", 
             noKeyCode:"74",
             // - 1 since .csv is not 0 indexed 
-            smsIndex: 2
+            smsIndex: 3
         })
             .print("center at 50vw", "middle at auto")
             .log()
