@@ -23,7 +23,7 @@ var showProgressBar = false;
 
 Template("Experiment.csv", row => {
    items.push(
-    [[row.cond1, row.item], "PennController", newTrial(
+    [[row.label, row.item], "PennController", newTrial(
         newText("Reminder: Press f for yes, j for no")
                 .print("center at 50vw", "middle at 30vh")
             ,
@@ -31,8 +31,7 @@ Template("Experiment.csv", row => {
             s: row.sentence,
             yesKeyCode: "70", 
             noKeyCode:"74",
-            // - 1 since .csv is not 0 indexed 
-            smsIndex: row.sms ? row.sms - 1 : null
+            smsIndex: row.sms != 0 ? row.sms - 1 : null
         })
             .print("center at 50vw", "middle at auto")
             .log()
