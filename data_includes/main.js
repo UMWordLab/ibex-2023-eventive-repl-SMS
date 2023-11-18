@@ -23,6 +23,7 @@ var shuffleSequence = seq( "consent", "IDentry", "demo", "instructions",
 var showProgressBar = false;
 var yeskey = 70; // 70 = f
 var nokey = 74; // 74 = j
+var keyremindertext = "<html> <head> <style> table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; } th:nth-child(1), td:nth-child(1) { width: 20%; } th:nth-child(2), td:nth-child(2) { width: 60%; } th:nth-child(3), td:nth-child(3) { width: 20%; } </style> </head> <body> <table> <tr> <th>YES</th> <th> </th> <th>NO</th> </tr> <tr> <td>f</td> <td> </td> <td>j</td> </tr> </table> </body> </html>"
 
 Header(
    newVar("partID").global()   
@@ -63,8 +64,7 @@ Template("practice.csv", row =>
             newText("Does the last word make sense? Press f to start:")
                 .print("center at 50vw", "middle at 8vh")
                 ,
-             newText("keyreminder", 
-                "<html> <head> <style> table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; } th:nth-child(1), td:nth-child(1) { width: 20%; } th:nth-child(2), td:nth-child(2) { width: 60%; } th:nth-child(3), td:nth-child(3) { width: 20%; } </style> </head> <body> <table> <tr> <th>YES</th> <th> </th> <th>NO</th> </tr> <tr> <td>f</td> <td> </td> <td>j</td> </tr> </table> </body> </html>")
+             newText("keyreminder", keyremindertext)
                 .css("font-family", "Helvetica, sans-serif")
                 .css("font-size", "16px")
                 .print("center at 50vw", "middle at 40vh"),
@@ -92,16 +92,19 @@ Template("practice.csv", row =>
 Template("experiment.csv", row => {
    items.push(
     [[row.label, row.item], "PennController", newTrial(
-        newText("Press f to start:")
+        newText("Does the last word make sense? Press f to start:")
             .print("center at 50vw", "middle at 8vh")
-            ,        
-        newText("Reminder: Press f for yes, j for no")
-                .print("center at 50vw", "middle at 40vh")
+            ,   
+        newText("keyreminder", keyremindertext)
+            .css("font-family", "Helvetica, sans-serif")
+            .css("font-size", "16px")
+            .print("center at 50vw", "middle at 40vh")
             ,
         newController("StopMakingSense", {
             s: row.sentence,
             yesKeyCode: yeskey,  
             noKeyCode: nokey,     
+            // - 1 since .csv is not 0 indexed 
             smsIndex: row.sms != 0 ? row.sms - 1 : null
         })
             .print("center at 50vw", "middle at 20vh")
@@ -116,7 +119,7 @@ Template("experiment.csv", row => {
    return newTrial('_dummy_',null);
 })
 
-// this is where native ibex items are defined
+// this is where native ibex items are defined. think this needs to stay at the end of the script.
 var items = [
 
     ["sep", "Separator", {transfer: 1500, normalMessage: "Please wait for the next item."}],
