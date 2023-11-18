@@ -67,7 +67,7 @@ Template("practice.csv", row =>
              newText("keyreminder", keyremindertext)
                 .css("font-family", "Helvetica, sans-serif")
                 .css("font-size", "16px")
-                .print("center at 50vw", "middle at 40vh"),
+                .print("center at 50vw", "middle at 35vh"),
             newController("StopMakingSense", {
                 s: row.sentence,
                 yesKeyCode: yeskey, 
@@ -98,7 +98,7 @@ Template("experiment.csv", row => {
         newText("keyreminder", keyremindertext)
             .css("font-family", "Helvetica, sans-serif")
             .css("font-size", "16px")
-            .print("center at 50vw", "middle at 40vh")
+            .print("center at 50vw", "middle at 35vh")
             ,
         // 20ms timer for full sentence. Due to callback failure with controller need to use this 'fake' timer method
         newTimer("deadline", 20000).start()
