@@ -21,6 +21,8 @@ var shuffleSequence = seq( "consent", "IDentry", "demo", "instructions",
                       )
 
 var showProgressBar = false;
+var yeskey = 70; // 70 = f
+var nokey = 74; // 74 = j
 
 Header(
    newVar("partID").global()   
@@ -68,8 +70,8 @@ Template("practice.csv", row =>
                 .print("center at 50vw", "middle at 40vh"),
             newController("StopMakingSense", {
                 s: row.sentence,
-                yesKeyCode: "70", 
-                noKeyCode:"74",
+                yesKeyCode: yeskey, 
+                noKeyCode: nokey,
                 // - 1 since .csv is not 0 indexed 
                 smsIndex: null
             })
@@ -98,8 +100,8 @@ Template("experiment.csv", row => {
             ,
         newController("StopMakingSense", {
             s: row.sentence,
-            yesKeyCode: "70",   // 70 = f
-            noKeyCode:"74",     // 74 = j
+            yesKeyCode: yeskey,  
+            noKeyCode: nokey,     
             smsIndex: row.sms != 0 ? row.sms - 1 : null
         })
             .print("center at 50vw", "middle at 20vh")
