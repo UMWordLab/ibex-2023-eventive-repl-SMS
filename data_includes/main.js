@@ -61,7 +61,7 @@ newTrial("demo",
 
 Template("practice.csv", row =>
     newTrial("practice",
-            newText("Does the last word make sense? Press f to start:")
+            newText("Does the last word make sense? Press f to start:<br>Respond as quick as possible - this screen will only be available for 10 seconds.")
                 .print("center at 50vw", "middle at 8vh")
                 ,
              newText("keyreminder", keyremindertext)
@@ -92,7 +92,7 @@ Template("practice.csv", row =>
 Template("experiment.csv", row => {
    items.push(
     [[row.label, row.item], "PennController", newTrial(
-        newText("Does the last word make sense? Press f to start:")
+        newText("Does the last word make sense? Press f to start:<br><br>Respond as quickly AND carefully as possible - you have 20 seconds for each sentence.")
             .print("center at 50vw", "middle at 8vh")
             ,   
         newText("keyreminder", keyremindertext)
@@ -100,16 +100,26 @@ Template("experiment.csv", row => {
             .css("font-size", "16px")
             .print("center at 50vw", "middle at 40vh")
             ,
-        newController("StopMakingSense", {
-            s: row.sentence,
-            yesKeyCode: yeskey,  
-            noKeyCode: nokey,     
-            // - 1 since .csv is not 0 indexed 
-            smsIndex: row.sms != 0 ? row.sms - 1 : null
-        })
-            .print("center at 50vw", "middle at 20vh")
-            .log()
-            .wait()
+        // 20ms timer for full sentence. Due to callback failure with controller need to use this 'fake' timer method
+        newTimer("deadline", 20000).start()
+        ,
+        newTimer("fake", 1)
+            .callback(
+                newController("StopMakingSense", {
+                    s: row.sentence,
+                    yesKeyCode: yeskey,  
+                    noKeyCode: nokey,     
+                    // - 1 since .csv is not 0 indexed 
+                    smsIndex: row.sms != 0 ? row.sms - 1 : null
+                })
+                    .print("center at 50vw", "middle at 20vh")
+                    .log()
+                    .wait(),
+                getTimer("deadline").stop()
+            )
+            .start()
+            ,
+        getTimer("deadline").wait()
     )
     .log("counter", __counter_value_from_server__)
     .log("label", row.cond1)
