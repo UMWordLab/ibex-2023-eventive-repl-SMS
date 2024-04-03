@@ -31,7 +31,7 @@ Header(
 .log( "partid" , getVar("partID") )
 
 newTrial("IDentry",
-   newText("instr", "Please enter your Prolific ID:").print()
+   newText("instr", "Please enter your uniqname:").print()
    ,
    newHtml("partpage", "<input type='text' id='partID' name='participant ID' min='1' max='120'>").print()
    ,
