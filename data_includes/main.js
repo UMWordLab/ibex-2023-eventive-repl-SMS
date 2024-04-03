@@ -95,12 +95,12 @@ newTrial("demo",
 Template("practice.csv", row =>
     newTrial("practice",
             newText("Does the last word make sense? Press f to start:<br>Respond as quick as possible - this screen will only be available for 10 seconds.")
-                .print("center at 50vw", "middle at 8vh")
+                .print("center at 50vw", "middle at 10vh")
                 ,
              newText("keyreminder", keyremindertext)
                 .css("font-family", "Helvetica, sans-serif")
                 .css("font-size", "16px")
-                .print("center at 50vw", "middle at 35vh"),
+                .print("center at 50vw", "middle at 45vh"),
             newController("StopMakingSense", {
                 s: row.sentence,
                 yesKeyCode: yeskey, 
@@ -108,7 +108,7 @@ Template("practice.csv", row =>
                 // - 1 since .csv is not 0 indexed 
                 smsIndex: null
             })
-                .print("center at 50vw", "middle at 20vh")
+                .print("center at 50vw", "middle at 30vh")
                 .log()
                 .wait()
                 ,
@@ -117,7 +117,7 @@ Template("practice.csv", row =>
               //  .wait()
               ,
             newButton("continue","continue")
-                .print("center at 50vw", "middle at 50vh")
+                .print("center at 50vw", "middle at 55vh")
                 .wait()
     )
 )
