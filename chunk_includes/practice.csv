@@ -1,5 +1,5 @@
 label,sms,item,sentence,feedback
-practice1,0,1,The decision walked,"""For this last word, you would choose 'no', since decisions cannot walk. At this point the sentence doesn't make sense."""
-practice2,0,2,The workmen chipped the tiles.,"""In this sentence, all of the words make sense and are grammatical."""
-practice3,0,3,The chef cooked the rhythm.,"""The last word would usually be considered a 'no' response since 'rhythm' cannot be cooked."""
-practice4,0,4,The lifeguard expired the kid.,"""In this sentence, you might answer 'no' at the word 'expired' or 'kid'."""
+practice1,0,1,The decision walked,"For this last word, you would choose 'no', since decisions cannot walk. At this point the sentence doesn't make sense."
+practice2,0,2,The workmen chipped the tiles.,"In this sentence, all of the words make sense and are grammatical."
+practice3,0,3,The chef cooked the rhythm.,The last word would usually be considered a 'no' response since 'rhythm' cannot be cooked.
+practice4,0,4,The lifeguard expired the kid.,"In this sentence, you might answer 'no' at the word 'expired' or 'kid'."
