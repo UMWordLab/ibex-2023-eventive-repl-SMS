@@ -126,12 +126,12 @@ Template("experiment.csv", row => {
    items.push(
     [[row.label, row.item], "PennController", newTrial(
         newText("Does the last word make sense? Press f to start:<br><br>Respond as quickly AND carefully as possible - you have 20 seconds for each sentence.")
-            .print("center at 50vw", "middle at 8vh")
+            .print("center at 50vw", "middle at 10vh")
             ,   
         newText("keyreminder", keyremindertext)
             .css("font-family", "Helvetica, sans-serif")
             .css("font-size", "16px")
-            .print("center at 50vw", "middle at 35vh")
+            .print("center at 50vw", "middle at 45vh")
             ,
         // 20ms timer for full sentence. Due to callback failure with controller need to use this 'fake' timer method
         newTimer("deadline", 20000).start()
@@ -145,7 +145,7 @@ Template("experiment.csv", row => {
                     // - 1 since .csv is not 0 indexed 
                     smsIndex: row.sms != 0 ? row.sms - 1 : null
                 })
-                    .print("center at 50vw", "middle at 20vh")
+                    .print("center at 50vw", "middle at 30vh")
                     .log()
                     .wait(),
                 getTimer("deadline").stop()
